@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ include ('home/_show.html.twig')  }}
+<div class="example-wrapper">
+    <h1>You can now edit this book! </h1>
+</div>
+<div>{{form(form)}}</div>
+<a href="{{path('app_home')}}"><button type="submit">Home</button></a>
+{% endblock %}

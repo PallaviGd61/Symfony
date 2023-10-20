@@ -1,0 +1,17 @@
+
+<div class="example-wrapper">
+  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <h2>Hello {{ app.user.FullName }}!✅</h2>
+    <h5>Want to logout?<a class="link" href="{{ path('app_logoutf') }}">Logout</a></h5>
+  {% else %}
+     <h2>Hello Anonymous User! <span><a class="link" href="{{ path('app_registration') }}">Register Here</a></span></h2>
+  {% endif  %}
+
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <input 
+                type="hidden" 
+                name="_csrf_token"
+                value="{{ csrf_token('logout') }}"
+>
+{% endif %}
+

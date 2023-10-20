@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BooksController!{% endblock %}
+
+{% block body %}
+{{ include ('home/_show.html.twig')  }}
+
+<div class="example-wrapper">
+    <h3>Publish your new book</h3>
+</div>
+{% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) %}
+  <div>{{form(form)}}</div>
+{% else %} 
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+ {# <div class="row">
+  {{ form_label(form.book_title, 'Enter your Book title') }}
+  {{ form_widget(form.book_title,{'attr':{'style':'color:green'}}) }}
+ </div> #}
+ <div style="display:none" class="row">
+  {{ form_label(form.Author, 'Author Name')}}
+  {{ form_widget(form.Author,{'value' : authorName}) }}
+ </div>
+ {{form_end(form)}}
+{% endif %}
+
+<a href="{{path('app_home')}}" class="btn btn-primary">Home</a>
+
+{% endblock %}

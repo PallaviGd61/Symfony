@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+{{ include ('home/_show.html.twig')  }}
+{% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) %}
+ <div>
+  <div class="card text-center">
+  <div class="card-header">
+    <h2>Admin Dashboard</h2>  
+  </div>
+  <div class="card-body">
+    <h3 class="card-title">Whats on your mind today?</h3>
+     <div><h5><a href="{{path('app_userlist')}}" class="card-link">View and Edit Users</a></h5></div>
+     <div><h5><a href="{{path('app_booklist')}}" class="card-link">Books and Authors</a></h5></div> 
+     <div><h5><a href="{{path('app_view_comments')}}" class="card-link">View Comments</a></h5></div>
+  </div>
+    {# <a href="{{path('app_logoutf')}}" class="btn btn-primary">Logout</a> #}
+    <div class="card-footer text-muted">
+       Thank you for visiting
+    </div> 
+  </div>
+ </div>
+
+{% elseif (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_AUTHOR')) %}
+  <div>
+  <div class="card text-center">
+  <div class="card-header">
+    <h2>Author Dashboard</h2>  
+  </div>
+  <div class="card-body">
+    <h3 class="card-title">Whats on your mind today?</h3>
+     <div><h5><a href="{{path('app_booklist')}}" class="card-link">View and Edit Books</a></h5></div>
+     <div><h5><a href="{{path('app_addbooks')}}" class="card-link">Write a new book</a></h5></div> 
+     <div><h5><a href="{{path('app_view_comments')}}" class="card-link">View Comments</a></h5></div>
+  </div>
+    {# <a href="{{path('app_logoutf')}}" class="btn btn-primary">Logout</a> #}
+    <div class="card-footer text-muted">
+       Thank you for visiting
+    </div> 
+  </div>
+ </div>
+
+{% elseif (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_USER')) %}
+   <h2>User Dashboard</h2>
+   <p>you can see booklist and comment on books</p>
+     <div><a href="{{path('app_booklist')}}">Lets review some books?</a></div>
+     <div><a href="{{path('app_view_comments')}}" class="card-link">View Comments</a></div>
+{% else %} 
+    <h2>anonymous user  dashboard</h2>
+    <h5>you can comment on books</h5>
+    <a href="{{path('app_booklist')}}">Would you like to review some books?</a>
+    <div>
+     <a href="{{path('app_login')}}">Already Registered? Login Here</a>
+   </div>
+{% endif %}
+{% endblock %}

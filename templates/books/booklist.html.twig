@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ include ('home/_show.html.twig')  }}
+
+<h3><b>List of books:</b></h3>
+<table class="table table-striped table-middle-aligned table-borderless">
+<thead>
+<tr>
+<th scope="col">ID</th>
+<th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Book Title</th>
+<th scope="col">Author Name</th>
+<th scope="col">Genre</th>
+<th scope="col" class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i> {{ 'label.actions'|trans }}</th>
+</tr>
+</thead>
+<tbody>
+{% for books in booklist %}
+<tr>
+<td>{{ books.id }}</td>
+<td>{{ books.BookTitle }}</td>
+<td>{{ books.Author }}</td>
+<td>{{ books.Genre }}</td>
+
+<td class="text-right">
+<div class="item-actions">
+{% if (is_granted('IS_AUTHENTICATED_FULLY')) and ((is_granted('ROLE_ADMIN')) or (is_granted('ROLE_AUTHOR'))) %}
+<a href="{{ path('app_editbook', {id: books.id}) }}" class="btn btn-sm btn-primary">
+<i class="fa fa-edit" aria-hidden="true"></i> {{ 'action.edit'|trans }}
+</a>
+<a href="{{ path('app_book_delete', {id: books.id}) }}" class="btn btn-sm btn-primary">
+<i class="fa fa-edit" aria-hidden="true"></i> delete
+</a>
+<a href="{{ path('app_book_review', {id: books.id}) }}" class="btn btn-sm btn-primary">
+<i class="fa fa-edit" aria-hidden="true"></i> All Reviews
+</a>
+{% else %}
+<a href="{{ path('app_comments', {id: books.id}) }}" class="btn btn-sm btn-primary">
+<i class="fa fa-edit" aria-hidden="true"></i> comment
+</a>
+{% endif %}
+</div>
+</td>
+</tr>
+{% else %}
+<tr>
+<td colspan="4" align="center">No users found</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% if (is_granted('IS_AUTHENTICATED_FULLY')) and ((is_granted('ROLE_ADMIN')) or (is_granted('ROLE_AUTHOR'))) %}  
+<a href="{{path('app_addbooks')}}" class="btn btn-primary">Add New Book</a>
+{% endif %}
+<a href="{{path('app_home')}}" class="btn btn-primary">Home</a>
+</div>
+{% endblock %}

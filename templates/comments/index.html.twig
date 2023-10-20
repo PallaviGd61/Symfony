@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommentsController!{% endblock %}
+
+{% block body %}
+{{ include ('home/_show.html.twig')  }}
+<div class="example-wrapper">
+    <h3>We would love your feedback on book <span style="color:red">{{bookName}}</span></h3>
+    {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
+    <h4>Commented By: <span style="color:red">{{app.user.username}}</span></h4>
+    {% endif %}
+<div>{{form(form)}}</div>
+<a href="{{path('app_home')}}" class="btn btn-primary">Home</a>
+{% endblock %}
