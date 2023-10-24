@@ -17,20 +17,28 @@ class RegistrationController extends AbstractController
 {
     #[Route('/registration', name: 'app_registration')]
     public function index(#[CurrentUser] ?Registration $user,Request $request, RegistrationRepository $post, UserPasswordHasherInterface $userPasswordHasher): Response
-    { 
+    {        
+
+      if (($user) && !$this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('app_home');
+      }
+      else{
             $addForm= new Registration();
             $form= $this->createForm(RegistrationType::class, $addForm);
-
             $form->handleRequest($request);
+            // dd($request->get('registration'));
             if($form->isSubmitted() && $form->isValid()){
-                //   $getData = $form->getData();
+                //  $data = $form->getData();
+               
                   $addForm->setPassword(
                      $userPasswordHasher->hashPassword(
                             $addForm,
-                            $form->get('password')->getData()
-                    )
-                  );
-                //  dd($addForm);
+                            $form->get('password')->getData() ) );
+                  if ($form->get('author')->getData()){
+                      $addForm->setRoles(["ROLE_AUTHOR"]); }
+                  else{
+                      $addForm->setRoles([]);
+                  }
                   $post->save($addForm, true);
                 // check if the user is already logged in(admin)
                 // add a flash and redirect
@@ -49,6 +57,7 @@ class RegistrationController extends AbstractController
                  'form' => $form
              ]
              );
+      }
         
     }
 }

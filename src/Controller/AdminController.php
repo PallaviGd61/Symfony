@@ -56,13 +56,7 @@ class AdminController extends AbstractController
     #[Route('/userlist/userdelete/{id<\d+>}', name: 'app_user_delete')]
     public function deleteUser( Request $request, EntityManagerInterface $entityManager,int $id): Response
     {
-        // $userId= $request->query->get('id');
-        // // dd($userId);
-        // $fetchUser= $users->find(Registration::class, $userId);
-        // $users->remove($fetchUser);
-        // $users->flush();
-        // $this->addFlash('success', 'user has been successfully deleted');
-        // return $this->redirectToRoute('app_userlist');
+        
         $fetchUser = $entityManager->getRepository(Registration::class)->find($id);
         if (!$fetchUser) {
             throw $this->createNotFoundException(

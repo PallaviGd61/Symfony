@@ -95,14 +95,6 @@ class BooksController extends AbstractController
     public function bookDelete(Request $request, EntityManagerInterface $entityManager,int $id): Response
 
     {
-        // $userId= $request->query->get('id');
-        //  dd($userId);   
-        // $fetchUser= $users->find(["id"=>$userId]);
-        // dd($fetchUser);
-        // $entityManager->remove($books);
-        // $entityManager->flush();
-        // $this->addFlash('success', 'One book has been successfully deleted');
-        // return $this->redirectToRoute('app_booklist');
         $fetchBook = $entityManager->getRepository(Books::class)->find($id);
         if (!$fetchBook) {
             throw $this->createNotFoundException(

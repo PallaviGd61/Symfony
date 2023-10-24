@@ -44,22 +44,6 @@ class CommentsController extends AbstractController
             }
 
 
-            // $addForm= new Comments();
-            // $form= $this->createFormBuilder($addForm)
-            //     ->add('Description')
-            //     ->add('submit' , SubmitType::class , ['label'=> 'save'])
-            //     ->getForm();
-            // $addForm->setBook($fetchId);
-            // $form->handleRequest($request);
-            // if($form->isSubmitted() && $form->isValid() ){
-            //       $getData = $form->getData();
-            //       $comment->save($getData, true);
-
-            //     // add a flash
-            //     $this->addFlash('success', 'form has been submitted');
-            //     // Redirect
-            //     return $this->redirectToRoute('app_home');
-            // }
 
         return $this->render('comments/index.html.twig', [
             'form' => $commentForm,
